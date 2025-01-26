@@ -80,10 +80,16 @@ class App extends Component {
         isUpdating: false,
       }));
     } catch (error) {
-      this.setState({
-        error: "Failed to update user",
+      // updating it locally since the api returns 500 for new userids
+      this.setState((prevState) => ({
+        users: prevState.users.map((user) =>
+          user.id === userData.id ? userData : user
+        ),
+        currentUser: null,
+        isFormVisible: false,
         isUpdating: false,
-      });
+      }));
+      
     }
   };
 
